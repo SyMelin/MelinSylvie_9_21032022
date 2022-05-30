@@ -39,10 +39,11 @@ export default class Login {
 
   handleSubmitAdmin = e => {
     e.preventDefault()
+    //CORRECTION [Bug report] - Login: ligns 44 and 45, remplaced employee-*-*input by admin-*-input
     const user = {
       type: "Admin",
-      email: e.target.querySelector(`input[data-testid="employee-email-input"]`).value,
-      password: e.target.querySelector(`input[data-testid="employee-password-input"]`).value,
+      email: e.target.querySelector(`input[data-testid="admin-email-input"]`).value,
+      password: e.target.querySelector(`input[data-testid="admin-password-input"]`).value,
       status: "connected"
     }
     this.localStorage.setItem("user", JSON.stringify(user))

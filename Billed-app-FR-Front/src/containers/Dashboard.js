@@ -138,6 +138,10 @@ export default class {
       $(`#status-bills-container${this.index}`)
         .html(cards(filteredBills(bills, getStatus(this.index))))
       this.counter ++
+      //CORRECTION [Bug Hunt] - Dashboard: Appel de l'évènement au clic + Précision du sélecteur avec #status-bills-container${this.index}
+      bills.forEach(bill => {
+        $(`#status-bills-container${this.index} #open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+      })
     } else {
       $(`#arrow-icon${this.index}`).css({ transform: 'rotate(90deg)'})
       $(`#status-bills-container${this.index}`)
@@ -145,9 +149,11 @@ export default class {
       this.counter ++
     }
 
+    /* code d'origine passer en commentaire pour corriger [Bug Hunt] - Dashboard: l'évènement n'est pas appelé au bon endroit
     bills.forEach(bill => {
       $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
     })
+    */
 
     return bills
 

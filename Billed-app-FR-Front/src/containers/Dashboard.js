@@ -149,7 +149,7 @@ export default class {
       this.counter ++
     }
 
-    /* code d'origine passer en commentaire pour corriger [Bug Hunt] - Dashboard: l'évènement n'est pas appelé au bon endroit
+    /* code d'origine passé en commentaire pour corriger [Bug Hunt] - Dashboard: l'évènement n'est pas appelé au bon endroit
     bills.forEach(bill => {
       $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
     })

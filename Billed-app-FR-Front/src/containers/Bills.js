@@ -35,6 +35,8 @@ export default class {
       .list()
       .then(snapshot => {
         const bills = snapshot
+          //CORRECTION [Bug report] - Bills: on classe les données par date décroissante les données avant l'affichage par BillsUI
+          .sort((a, b) => new Date(b.date) - new Date(a.date))
           .map(doc => {
             try {
               return {

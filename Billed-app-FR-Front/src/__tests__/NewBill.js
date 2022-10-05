@@ -456,5 +456,5 @@ describe('When I post a NewBill', () => {
     mockStore.bills().create(bill)
 
     // Le nombre de bills dans le store a t'il été incrémenté suite à notre update?
-    waitFor(() => expect(billsList.length).toBe(5))
+    waitFor(() => expect(billsList.length).toBe(3))
   })})

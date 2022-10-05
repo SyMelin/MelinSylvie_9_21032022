@@ -39,7 +39,7 @@ export default class Login {
 
   handleSubmitAdmin = e => {
     e.preventDefault()
-    //CORRECTION [Bug report] - Login: ligns 44 and 45, remplaced employee-*-*input by admin-*-input
+    //CORRECTION [Bug report] - Login: ligns 44 and 45, employee-*-*input change into admin-*-input
     const user = {
       type: "Admin",
       email: e.target.querySelector(`input[data-testid="admin-email-input"]`).value,

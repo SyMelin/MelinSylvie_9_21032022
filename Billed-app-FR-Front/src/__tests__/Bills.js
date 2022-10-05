@@ -125,12 +125,10 @@ describe("Given I am a user connected as Employee", () => {
       document.body.append(root)
       router()
       window.onNavigate(ROUTES_PATH.Bills)
-      await waitFor(() => screen.getByText("Type"))
-      const contentPending  = await waitFor(() => screen.getByText("100 €")) 
-      expect(contentPending).toBeTruthy()
-     /**
-      * 
-      */
+      //On vérifie que le tableau affiche bien 4 lignes correspondant aux 4 factures du fichier moqué
+      const tableBody = await waitFor(() => screen.getByTestId('tbody'))
+      const rows = tableBody.querySelectorAll('tr')
+      expect(rows.length).toEqual(4)
     })
   })
   describe("When an error occurs on API", () => {

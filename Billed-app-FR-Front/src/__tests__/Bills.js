@@ -125,7 +125,7 @@ describe("Given I am a user connected as Employee", () => {
       document.body.append(root)
       router()
       window.onNavigate(ROUTES_PATH.Bills)
-      //On vérifie que le tableau affiche bien 4 lignes correspondant aux 4 factures du fichier moqué
+      //On vérifie que le tableau affiche bien 4 lignes correspondant aux 4 factures du fichier moqué store.js
       const tableBody = await waitFor(() => screen.getByTestId('tbody'))
       const rows = tableBody.querySelectorAll('tr')
       expect(rows.length).toEqual(4)

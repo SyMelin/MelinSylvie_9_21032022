@@ -27,11 +27,12 @@ describe("Given I am connected as an employee", () => {
       window.onNavigate(ROUTES_PATH.NewBill)
       await waitFor(() => screen.getByTestId('icon-mail'))
       const mailIcon = screen.getByTestId('icon-mail')
-      //l'icône mail doit être mise en valeur (via le css)
+      //the bill icon should be highlighted (through different css)
       expect(mailIcon.classList).toContain('active-icon')
     })
-  })//test OK
+  })
 
+  //unit test of handleChangeFile
   describe("When I am on NewBill page", () => {
     describe("When I upload a justificative file in correct format", () => {
       test("Then the file should be accepted", async () => {
@@ -71,7 +72,7 @@ describe("Given I am connected as an employee", () => {
         expect(window.alert).not.toHaveBeenCalled()
       })
     })
-
+    //unit test of handleChangeFile
     describe("When I do not upload a justificative file in correct format", () => {
       test("Then the file should be refused", async () => {
         document.body.innerHTML = NewBillUI()
@@ -102,6 +103,7 @@ describe("Given I am connected as an employee", () => {
         expect(inputFile.files).toBe(null)
       })
     })
+
     describe("When I do not fill fields and I click on submit button Send", () => {
       test ("Then It should render NewBill page", async () => {
         document.body.innerHTML =  NewBillUI()
@@ -214,12 +216,11 @@ describe("Given I am connected as an employee", () => {
   })
 })
  
-// test d'intégration POST
- 
+//POST integration test
 describe("Given I am a user connected as Employee", () => {
   describe("When I am on NewBill page", () => {
     describe("When I upload a file with correct format", () => {
-      test("fetch data to mock API POST and then render Bills page after Submit", async () => { 
+      test("Then, fetchs data to mock API POST and renders Bills page after Submit", async () => { 
         Object.defineProperty(window, 'localStorage', { value: localStorageMock })
           window.localStorage.setItem('user', JSON.stringify({
           type: 'Employee', email: "employee@tld.com"
@@ -246,7 +247,7 @@ describe("Given I am a user connected as Employee", () => {
           files: [file]
         }})
         expect(handleChangeFile).toHaveBeenCalled()
-        // The Post request is the "create" method of store.bills() executed in 'handleCHangeFile'
+        //The Post request is the "create" method of store.bills() executed in 'handleCHangeFile'
         expect(inputFile.files[0].name).toMatch(/(\.jpg|\.jpeg|\.png)$/i)
         expect(store.bills().create).toHaveBeenCalled()
         const newBill = await store.bills().create()
@@ -275,7 +276,7 @@ describe("Given I am a user connected as Employee", () => {
           document.body.innerHTML = ROUTES({ pathname })
         }
       })
-      test("fetches bills from an API and fails with 404 message error then render NewBill page after Submit", async () => {
+      test("Then fetches bills from an API and fails with 404 message error and renders NewBill page after Submit", async () => {
         const newBillPage = new NewBill({
           document,
           onNavigate,
@@ -295,7 +296,7 @@ describe("Given I am a user connected as Employee", () => {
           files: [file]
         }})
         expect(handleChangeFile).toHaveBeenCalled()
-        // The Post request is the "create" method of store.bills() executed in 'handleCHangeFile'
+        //The Post request is the "create" method of store.bills() executed in 'handleCHangeFile'
         expect(inputFile.files[0].name).toMatch(/(\.jpg|\.jpeg|\.png)$/i)
 
         const handleSubmit = jest.fn(newBillPage.handleSubmit)
@@ -306,7 +307,7 @@ describe("Given I am a user connected as Employee", () => {
 
         expect(screen.getByText("Envoyer une note de frais")).toBeTruthy()
       })
-      test("fetches bills from an API and fails with 500 message error then render NewBill page after Submit", async () => {
+      test("Then fetches bills from an API and fails with 500 message error and renders NewBill page after Submit", async () => {
         const newBillPage = new NewBill({
           document,
           onNavigate,
@@ -326,7 +327,7 @@ describe("Given I am a user connected as Employee", () => {
           files: [file]
         }})
         expect(handleChangeFile).toHaveBeenCalled()
-        // The Post request is the "create" method of store.bills() executed in 'handleCHangeFile'
+        //The Post request is the "create" method of store.bills() executed in 'handleCHangeFile'
         expect(inputFile.files[0].name).toMatch(/(\.jpg|\.jpeg|\.png)$/i)
 
         const handleSubmit = jest.fn(newBillPage.handleSubmit)

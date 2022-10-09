@@ -19,13 +19,13 @@ const row = (bill) => {
     `)
   }
 
-/*
+/* Original code put into comments to correct [Bug report]
 const rows = (data) => {
   return (data && data.length) ? data.map(bill => row(bill)).join("") : ""
 }
 */
 
-//CORRECTION [Bug report] - Bills: pour réussir le test
+//CORRECTION [Bug report] - Bills: we need to make sure the data are ordered by date in decreasing order before rendering BillsUI in case a problem happens during the get request (cf: test on Bills)
 const rows = (data) => {
   const dataSorted = data && data.length ? data.sort((a, b) => new Date(b.date) - new Date(a.date)) : "";
   return data && data.length ? dataSorted.map((bill) => row(bill)).join("") : "";

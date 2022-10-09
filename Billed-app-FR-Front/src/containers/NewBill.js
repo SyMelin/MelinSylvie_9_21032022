@@ -1,7 +1,6 @@
 import { ROUTES_PATH } from '../constants/routes.js'
 import Logout from "./Logout.js"
 
-//const fileAllowedExtension = ['.jpg', '.jpeg', '.png']
 const fileAllowedExtension = ['jpg', 'jpeg', 'png']
 
 const isFileAllowed = (string) => {
@@ -16,8 +15,8 @@ export default class NewBill {
     const formNewBill = this.document.querySelector(`form[data-testid="form-new-bill"]`)
     formNewBill.addEventListener("submit", this.handleSubmit)
     const file = this.document.querySelector(`input[data-testid="file"]`)
-    //CORRECTION [Bug Hunt] - Bills : Ajout de l'attribut "accept" pour suggérer les extensions de fichiers attendues lors de la sélection par l'utlisateur dans un dossier
-    //Attention : il ne s'agit que d'une suggestion, cela ne bloque pas la saisie d'un autre type de fichier que ceux attendus
+    //CORRECTION [Bug Hunt] - Bills : Addition of "accept" attribute to suggest expected file extensions when the user selects a file from a folder
+    //Warning : that is only a suggestion, it will not block the input of a file with other extension than those expected
     file.setAttribute('accept', '.jpg,.jpeg,.png')
     //
     file.addEventListener("change", this.handleChangeFile)
@@ -30,18 +29,12 @@ export default class NewBill {
     e.preventDefault()
     if (e.target.files !== null) {
       const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
-      //console.log("value", e.target.value)
       const filePath = e.target.value.split(/\\/g)
-      //console.log('filePath', filePath)
-      //console.log(filePath.length)
       const fileName = filePath[filePath.length-1]
-      //console.log('fileName', fileName)
-      //CORRECTION [Bug Hunt] - Bills: instruction pour bloquer la saisie par l'utilisateur d'autres types de fichier que ceux attendus
-      //Si le nom du fichier saisi se termine par l'une des extensions autorisées, le fichier est accepté et le script se poursuit
-      //Sinon, alors on empêche la poursuite du script et une alerte est renvoyée
+      //CORRECTION [Bug Hunt] - Bills: instruction to block input by the user of a file with a type different from those expected
+      //If the name of theinput file ends by of the authorized extensions, the file will be accepted and the instruction reading continues 
+      //Else, the instruction reading is stopped and an alert is thrown
       if (isFileAllowed(file.type) === true ) {
-        //console.log("input.value", e.target.value)
-        //console.log("input.files", e.target.files)
         const formData = new FormData()
         const email = JSON.parse(localStorage.getItem("user")).email
         formData.append('file', file)

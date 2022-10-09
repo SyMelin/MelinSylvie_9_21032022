@@ -30,22 +30,23 @@ describe("Given I am connected as an employee", () => {
       await waitFor(() => screen.getByTestId('icon-window'))
       const windowIcon = screen.getByTestId('icon-window')
       //to-do write expect expression:
-       //l'icône des notes de frais doit être mise en valeur (via le css)
-       expect(windowIcon.classList).toContain('active-icon')
-       //
+      //the bill icon should be highlighted (through different css)
+      expect(windowIcon.classList).toContain('active-icon')
+      //
 
     })
     test("Then bills should be ordered from earliest to latest", () => {
       document.body.innerHTML = BillsUI({ data: bills })
       const dates = screen.getAllByText(/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i).map(a => a.innerHTML)
-       //antiChrono classe les éléments par ordre décroissant
+       //antiChrono orders data by date in decreasing order
       const antiChrono = (a, b) => ((a < b) ? 1 : -1)
       const datesSorted = [...dates].sort(antiChrono)
       expect(dates).toEqual(datesSorted)
     })
   })
 
-//Ajout de tests
+
+//tests added
 
   describe("When I am on Bills Page but it is loading", () => {
     test("Then, Loading page should be rendered", () => {
@@ -61,7 +62,7 @@ describe("Given I am connected as an employee", () => {
     })
   })
 
-  //test unitaire sur handleClickNewBill
+  //unit test of handleClickNewBill
   describe("When I am on Bills Page, and I click on New Bill button", () => {
     test("Then It should renders NewBill page", () => {
       Object.defineProperty(window, 'localStorage', { value: localStorageMock })
@@ -85,9 +86,9 @@ describe("Given I am connected as an employee", () => {
     })
   })
 
-  //test unitaire sur handleClickIconEye
+  //unit test of handleClickIconEye
   describe("When I am on Bills Page, and I click on any icon eye", () => {
-    test('A modal should open', () => {
+    test('Then a modal should open', () => {
       Object.defineProperty(window, 'localStorage', { value: localStorageMock })
       window.localStorage.setItem('user', JSON.stringify({
         type: 'Employee'
@@ -115,17 +116,17 @@ describe("Given I am connected as an employee", () => {
   })
 })
 
-//test d'intégration GET
+//GET integration test GET
 describe("Given I am a user connected as Employee", () => {
   describe("When I navigate to Bills", () => {
-    test("fetches bills from mock API GET", async () => {
+    test("Then, fetches bills from mock API GET and the displayed table should contains the 4 rows corresponding to the 4 bills of the mocked file 'store.js", async () => {
       localStorage.setItem("user", JSON.stringify({ type: "Employee", email: "e@e" }))
       const root = document.createElement('div')
       root.setAttribute('id', 'root')
       document.body.append(root)
       router()
       window.onNavigate(ROUTES_PATH.Bills)
-      //On vérifie que le tableau affiche bien 4 lignes correspondant aux 4 factures du fichier moqué store.js
+      //The disaplyed table should contains the 4 rows corresponding to the 4 bills of the mocked file 'store.js'
       const tableBody = await waitFor(() => screen.getByTestId('tbody'))
       const rows = tableBody.querySelectorAll('tr')
       expect(rows.length).toEqual(4)
@@ -157,6 +158,7 @@ describe("Given I am a user connected as Employee", () => {
         }})
       window.onNavigate(ROUTES_PATH.Bills)
       await new Promise(process.nextTick);
+      //The 404 message error is rendered
       const message = await screen.getByText(/Erreur 404/)
       expect(message).toBeTruthy()
     })
@@ -168,9 +170,9 @@ describe("Given I am a user connected as Employee", () => {
             return Promise.reject(new Error("Erreur 500"))
           }
         }})
-
       window.onNavigate(ROUTES_PATH.Bills)
       await new Promise(process.nextTick);
+      //The 500 message error is rendered
       const message = await screen.getByText(/Erreur 500/)
       expect(message).toBeTruthy()
     })

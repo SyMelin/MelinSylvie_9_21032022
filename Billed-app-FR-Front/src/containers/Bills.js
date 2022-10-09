@@ -24,7 +24,7 @@ export default class {
     const billUrl = icon.getAttribute("data-bill-url")
     const imgWidth = Math.floor($('#modaleFile').width() * 0.5)
     $('#modaleFile').find(".modal-body").html(`<div style='text-align: center;' class="bill-proof-container"><img width=${imgWidth} src=${billUrl} alt="Bill" /></div>`)
-    //CORRECTION [Bug Hunt] - Bills: Ajout de if(typeof $('#modaleFile').modal === 'function')
+    //CORRECTION [Bug Hunt] - Bills: addition of: if(typeof $('#modaleFile').modal === 'function')
     if (typeof $('#modaleFile').modal === 'function') $('#modaleFile').modal('show')
   }
 
@@ -35,7 +35,7 @@ export default class {
       .list()
       .then(snapshot => {
         const bills = snapshot
-          //CORRECTION [Bug report] - Bills: on classe les données par date décroissante les données avant l'affichage par BillsUI
+          //CORRECTION [Bug report] - Bills: we need to order the data by date in decreasing order before rendering BillsUI
           .sort((a, b) => new Date(b.date) - new Date(a.date))
           .map(doc => {
             try {
